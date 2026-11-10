@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "PeopleListDI",
+    "slug": "people-list-di",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "peoplelistdi",
+    "plugins": ["expo-router"]
+  }
+}

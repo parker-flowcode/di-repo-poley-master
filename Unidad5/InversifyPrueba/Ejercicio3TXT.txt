@@ -1,0 +1,49 @@
+Queremos mostrar un listado de personas, sin embargo los días pares se mostrarán los hombres y los días impares las mujeres.
+    domain
+        entities
+            persona
+                +dni: String(get)
+                +nombre: String(get/set)
+                +fechaNacimiento: Date(get/set)
+                +genero: String(get)
+        interfaces
+            repositories
+                iRepositoryPersona()
+                    export interface iRepositoryPersona
+                    +getPersonas(): Persona [ ]
+            useCase
+                iUsesCasesPersonas()
+                    export interface iUsesCasesPersonas
+					    +getPersonas(). Personas[]
+					    +mostrarPersonasPorDias(): Persona[] 
+					    +mostrarHombresDiasPares(): Persona[] 	
+					    +mostrarMujeresDiasImpares(): Persona[] 
+    application
+        useCaseClases
+            PersonasUseCases 
+                implement iUsesCasesPersonas
+                Se le inyecta a esta clase la iRepositoryPersonas
+                +getPersonas(): Persona[] 
+                +mostrarPersonasPorDias(): Persona[] 
+                +mostrarHombresDiasPares(): Persona[] 
+                +mostrarMujeresDiasImpares(): Persona[] 
+
+    presentation
+        viewModels
+            PersonaViewModels
+                export class PersonaViewModels 
+                Se le inyecta la interfaz que viene de domain iUsesCasesPersonas 
+                +personas: Persona[] get 
+                +isLoading: boolean get 
+                +error: string get 
+        views
+            personaView
+    data
+        repositories
+            repositoryPersona 
+            export class RepositoryPersona implements iRepositoryPersonas
+            +getPersonas(): Personas [ ]
+
+    core 
+        container.ts 
+        types.ts 
