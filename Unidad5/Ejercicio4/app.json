@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Persona del día",
+    "slug": "persona-del-dia",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "personadeldia",
+    "plugins": ["expo-router"]
+  }
+}

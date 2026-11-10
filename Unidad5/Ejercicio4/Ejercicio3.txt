@@ -1,0 +1,55 @@
+Queremos mostrar una persona de un listado de 7 personas según el día de la semana (domingo primera persona, lunes segunda, etc.).
+    domain
+        entities
+            persona
+                +id: String(get)
+                +nombre: String(get/set)
+                +apellidos: String(get/set)
+                +fechaNacimiento: Date(get/set)
+        interfaces
+            repositories
+                iRepositoryPersona()
+                    export interface iRepositoryPersona
+                    +getPersonas(): Persona []
+            useCase
+                iUsesCasesPersonas()
+                    export interface iUsesCasesPersonas
+                    +getPersonas(): Persona[]
+                    +obtenerPersonaDelDia(): Persona
+    application
+        useCaseClases
+            PersonasUseCases 
+                implement iUsesCasesPersonas
+                Se le inyecta a esta clase la iRepositoryPersona
+                +getPersonas(): Persona[]
+                +obtenerPersonaDelDia(): Persona
+
+    presentation
+        viewModels
+            PersonaViewModels
+                export class PersonaViewModels 
+                Se le inyecta la interfaz que viene de domain iUsesCasesPersonas 
+                +personaActual: Persona get 
+                +cargarPersona()
+                    -Llama a getPersonasDelDia() del caso de uso y se lo asigna a persona.
+        views
+            personaView
+        models
+            DTO
+                PersonaConColor
+                    +id: String(get)
+                    +nombre: String(get/set)
+                    +apellidos: String(get/set)
+                    +fechaNacimiento: Date(get/set)
+                    +color: String(get)
+                    -asignarColor()
+
+    data
+        repositories
+            repositoryPersonaMock 
+            export class RepositoryPersonaMock implements iRepositoryPersona
+            +getPersonas(): Persona []
+
+    core 
+        container.ts 
+        types.ts

@@ -41,6 +41,7 @@ Queremos mostrar un listado de personas, sin embargo los d√≠as pares se mostrar√
     data
         repositories
             repositoryPersona 
+            
             export class RepositoryPersona implements iRepositoryPersonas
             +getPersonas(): Personas [ ]
 
