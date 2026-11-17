@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { IGetPersonsWithDepartments } from '../../domain/interfaces/useCases/IGetPersonsWithDepartments';
 import { TYPES } from '../../core/types';
-import { PersonaMapper } from '../mappers/PersonaMapper';
+import { IDomainToUIMapper } from '../mappers/IDomainToUIMapper';
 import { PersonaUIModel } from '../models/PersonaUIModel';
 
 @injectable()
@@ -12,8 +12,8 @@ export class PersonListViewModel {
   constructor(
     @inject(TYPES.IGetPersonsWithDepartments)
     private readonly getPersonsWithDepartments: IGetPersonsWithDepartments,
-    @inject(TYPES.PersonaMapper)
-    private readonly personaMapper: PersonaMapper,
+    @inject(TYPES.IDomainToUIMapper)
+    private readonly domainToUIMapper: IDomainToUIMapper,
   ) {}
 
   get personas(): PersonaUIModel[] {
@@ -28,7 +28,7 @@ export class PersonListViewModel {
     this._error = '';
     try {
       const personas = await this.getPersonsWithDepartments.execute();
-      this._personas = personas.map((persona) => this.personaMapper.toUIModel(persona));
+      this._personas = personas.map((persona) => this.domainToUIMapper.toUIModel(persona));
     } catch {
       this._personas = [];
       this._error = 'No se pudo cargar el listado de personas.';
