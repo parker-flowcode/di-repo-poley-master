@@ -13,10 +13,10 @@ npm.cmd run web
 ## Estructura
 
 - `src/domain`: entidades inmutables, DTO e interfaces de repositorio y caso de uso.
-- `src/application`: combina personas y departamentos para construir el DTO del listado.
-- `src/data`: repositorios mock de personas y departamentos.
+- `src/application`: caso de uso que solicita el listado combinado al repositorio de personas.
+- `src/data`: repositorios mock; el repositorio de personas combina personas y departamentos para construir el DTO del listado.
 - `src/presentation`: mapper, ViewModel y pantalla responsive.
 - `src/core`: tokens y configuración de dependencias de Inversify.
 - `src/app`: rutas de Expo Router.
 
-Los datos están en los repositorios mock. Cada `Departamento` define su color; el caso de uso lo incorpora al DTO para que la presentación pinte cada fila según su departamento.
+Los datos están en los repositorios mock. `Departamento` solo contiene su identidad y nombre; `DomainToUIMapper` asigna el color de fila por ID como un detalle de presentación.

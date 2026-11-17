@@ -1,5 +1,5 @@
-import { Persona } from '../../entities/Persona';
+import { PersonaConDepartamentoDTO } from '../../DTO/PersonaConDepartamentoDTO';
 
 export interface IRepositoryPersona {
-  getPersonas(): Promise<Persona[]>;
+  getPersonasConNombreDepartamento(): Promise<PersonaConDepartamentoDTO[]>;
 }

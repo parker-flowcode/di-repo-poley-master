@@ -6,9 +6,9 @@ import { IRepositoryDepartamento } from '../../domain/interfaces/repositories/IR
 export class RepositoryDepartamentoMock implements IRepositoryDepartamento {
   async getDepartamentos(): Promise<Departamento[]> {
     return [
-      new Departamento(1, 'Administración', '#EAF2D7'),
-      new Departamento(2, 'Informática', '#DDEBF5'),
-      new Departamento(3, 'Recursos Humanos', '#F8E5DC'),
+      new Departamento(1, 'Administración'),
+      new Departamento(2, 'Informática'),
+      new Departamento(3, 'Recursos Humanos'),
     ];
   }
 }
