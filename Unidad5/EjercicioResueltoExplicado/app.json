@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Personas por departamento",
+    "slug": "personas-por-departamento",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "personasdepartamento",
+    "plugins": ["expo-router"]
+  }
+}
