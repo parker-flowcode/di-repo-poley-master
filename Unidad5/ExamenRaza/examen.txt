@@ -1,0 +1,72 @@
+domain
+    entities
+        -clsAnimal
+            +id: int(get)
+            +nombre: String(get)
+            +sexo: "Macho" | "Hembra" (get/set)
+            +idRaza: int(get)
+            +colorCelda: String(get)
+            +fechaDeEntrega: Date(get/set)
+		-clsRaza
+			+idRaza: number(get)
+            +nombre: String(get/set)
+
+    interfaces
+        repositories
+            -iRepositoryAnimales
+                +getListadoFecha(fecha: Date): Animales[]
+                +actualizarAnimal(idAnimal: int, idRaza: int): bool
+            -iRepositoryRaza
+                +getListadosRazas(): Raza[]
+        useCases
+            -iUseCaseListadoAnimalFecha
+                +execute(fecha:Date): Animal[]  
+	   		-iUseCaseActualizarAnimal
+                +execute(idAnimal: int, idRaza: int): bool
+            -iUseCaseListadoCompletoRazas    
+                +execute(): Raza[]
+    application
+        useCasesClases
+            -UseCaseListadoAnimalFecha implements iUseCaseListadoAnimalFecha
+                Se le inyecta la interfaz iRepositoryAnimal
+                +execute(fecha: Date): Animal[]
+                    -Esta función eliminará del listado los que ya tengan una raza 
+            -UseCaseActualizarAnimal implements iUseCaseActualizarAnimal
+                Se le inyecta la interfaz iRepositoryAnimal
+                +execute(idAnimal: int, idRaza: int): bool
+            -iUseCaseListadoCompletoRazas implements iUseCaseListadoCompletoRazas
+                Se le inyecta la interfaz iRepositoryRaza
+                +execute(): idRaza[]
+    presentation
+        viewModels
+            AnimalesViewModels
+                -Se le inyecta la iUseCaseListadoAnimalFecha, iUseCaseActualizarAnimal e iUseCaseListadoCompletoRazas
+                +fecha: Date(get)
+                +listadoAnimalConColor: AnimalConColor[] (get)
+                +mensaje: String(get)
+                +numActualizaciones: int (get)
+                +actualizarRaza(): void 
+                    -Recorre el listadoAnimalConColor
+                    -Guarda en la base de datos las actualizaciones y asigna a numActualizaciones el número total de razas que se han asignado en listadoAnimalConColor
+        views
+            AsginarRazasView
+                -Instanciamos el AsginarRazasVM
+        models 
+            AnimalConColor
+                +nombreAnimal: String(get)
+                +idAnimal: int(get)
+                +idRazaSeleccionada: int(get/set)
+                +colorFondo: String(get)
+                +sexo: String(get)
+                -asignarColor()
+                    -Le asignará un color a la propiedad colorFondo y se le llamará en el
+    data
+        repositories
+            -RepositoryAnimal implements iRepositoryAnimales
+                +getListadoFecha(fecha: Date): Animales[]
+                +actualizarAnimal(idAnimal: int, idRaza: int): bool
+            -RepositoryRaza implements iRepositoryRaza
+                +getListadosRazas(): Raza[]
+    core
+        container.ts
+        types.ts (''iRepositoryAnimales'' , ''iAnimalesUseCases'')
