@@ -9,13 +9,15 @@ src/
   domain/
     entities/                  Animal.ts, Raza.ts
     interfaces/repositories/   IAnimalRepository.ts, IRazaRepository.ts
-    interfaces/useCases/       IListadoAnimalesFecha.ts, IActualizarAnimal.ts,
+  application/
+    iUseCases/                 IListadoAnimalesFecha.ts, IActualizarAnimal.ts,
                                IListadoCompletoRazas.ts
-  application/useCases/        ListadoAnimalesFecha.ts, ActualizarAnimal.ts,
+    useCasesClases/            ListadoAnimalesFecha.ts, ActualizarAnimal.ts,
                                ListadoCompletoRazas.ts
   data/repositories/           AnimalRepository.ts, RazaRepository.ts
   presentation/
     models/                    AnimalConColor.ts
+    mappers/                   AnimalConColorMapper.ts
     viewModels/                AnimalesViewModel.ts
     views/                     AsignarRazasView.tsx
   core/                        container.ts, types.ts
@@ -37,14 +39,13 @@ El signo `+` indica miembro público y `-` miembro privado, como en el enunciado
 - `Raza`: `+idRaza: number (get)`, `+nombre: string (get/set)`.
 - `IAnimalRepository`: `+getListadoFecha(fecha: Date): Animal[]`, `+actualizarAnimal(idAnimal: number, idRaza: number): boolean`.
 - `IRazaRepository`: `+getListadosRazas(): Raza[]`.
-- `IListadoAnimalesFecha`: `+execute(fecha: Date): Animal[]`; filtra los animales que ya tienen raza.
-- `IActualizarAnimal`: `+execute(idAnimal: number, idRaza: number): boolean`.
-- `IListadoCompletoRazas`: `+execute(): Raza[]`.
-- `ListadoAnimalesFecha`, `ActualizarAnimal` y `ListadoCompletoRazas`: implementan los contratos anteriores; cada caso de uso recibe el repositorio que necesita mediante `@inject`.
+- `IListadoAnimalesFecha`, `IActualizarAnimal` e `IListadoCompletoRazas` viven en `application/iUseCases` y definen respectivamente `+execute(fecha: Date): Animal[]`, `+execute(idAnimal: number, idRaza: number): boolean` y `+execute(): Raza[]`.
+- `ListadoAnimalesFecha`, `ActualizarAnimal` y `ListadoCompletoRazas` viven en `application/useCasesClases`, implementan esos contratos e inyectan los repositorios correspondientes. El listado filtra los animales que ya tienen raza.
 - `AnimalRepository`: implementa `IAnimalRepository` con `+getListadoFecha(fecha: Date): Animal[]` y `+actualizarAnimal(idAnimal: number, idRaza: number): boolean`.
 - `RazaRepository`: implementa `IRazaRepository` con `+getListadosRazas(): Raza[]`.
 - `AnimalConColor`: `+idAnimal`, `+nombreAnimal`, `+sexo`, `+colorFondo` (get) e `+idRazaSeleccionada` (get/set); `-asignarColor(): string` calcula el fondo a partir del sexo.
-- `AnimalesViewModel`: `+fecha`, `+listadoAnimalConColor`, `+razas`, `+mensaje`, `+numActualizaciones` (get); `+seleccionarRaza(idAnimal: number, idRaza: number): void`; `+actualizarRazas(): void`; `-recargarAnimales(): void`.
+- `AnimalConColorMapper`: `+toModel(animal: Animal): AnimalConColor` y `+toModels(animales: Animal[]): AnimalConColor[]`; adapta entidades de dominio a modelos de presentación.
+- `AnimalesViewModel`: `+fecha`, `+listadoAnimalConColor`, `+razas`, `+mensaje`, `+numActualizaciones` (get); `+seleccionarRaza(idAnimal: number, idRaza: number): void`; `+actualizarRazas(): void`. Usa el mapper al cargar y al volver a consultar el listado.
 - `AsignarRazasView`: vista React Native que obtiene el ViewModel desde `container.ts`; `types.ts` contiene los identificadores de los contratos de inyección.
 
 ## Ejecutar

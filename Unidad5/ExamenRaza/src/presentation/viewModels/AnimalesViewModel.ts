@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { Animal } from '../../domain/entities/Animal';
 import { Raza } from '../../domain/entities/Raza';
-import { IActualizarAnimal } from '../../domain/interfaces/useCases/IActualizarAnimal';
-import { IListadoAnimalesFecha } from '../../domain/interfaces/useCases/IListadoAnimalesFecha';
-import { IListadoCompletoRazas } from '../../domain/interfaces/useCases/IListadoCompletoRazas';
+import { IActualizarAnimal } from '../../application/iUseCases/IActualizarAnimal';
+import { IListadoAnimalesFecha } from '../../application/iUseCases/IListadoAnimalesFecha';
+import { IListadoCompletoRazas } from '../../application/iUseCases/IListadoCompletoRazas';
 import { TYPES } from '../../core/types';
+import { AnimalConColorMapper } from '../mappers/AnimalConColorMapper';
 import { AnimalConColor } from '../models/AnimalConColor';
 
 @injectable()
@@ -14,6 +14,7 @@ export class AnimalesViewModel {
   private _mensaje = 'Selecciona una raza para cada animal que quieras clasificar.';
   private _numActualizaciones = 0;
   private readonly _razas: Raza[];
+  private readonly mapper = new AnimalConColorMapper();
 
   constructor(
     @inject(TYPES.IListadoAnimalesFecha)
@@ -24,7 +25,7 @@ export class AnimalesViewModel {
     private readonly razasUseCase: IListadoCompletoRazas,
   ) {
     this._razas = this.razasUseCase.execute();
-    this.recargarAnimales();
+    this._listadoAnimalConColor = this.mapper.toModels(this.listadoUseCase.execute(this._fecha));
   }
 
   get fecha(): Date {
@@ -69,16 +70,7 @@ export class AnimalesViewModel {
       ? 'Se ha actualizado 1 registro.'
       : `Se han actualizado ${actualizados} registros.`;
 
-    // Al recargar, las filas guardadas desaparecen porque ya tienen una raza asignada.
-    this.recargarAnimales();
-  }
-
-  private recargarAnimales(): void {
-    this._listadoAnimalConColor = this.listadoUseCase.execute(this._fecha)
-      .map((animal: Animal) => new AnimalConColor(
-        animal.id,
-        animal.nombre,
-        animal.sexo,
-      ));
+    // El nuevo resultado de dominio se transforma a modelos de presentación tras guardar.
+    this._listadoAnimalConColor = this.mapper.toModels(this.listadoUseCase.execute(this._fecha));
   }
 }

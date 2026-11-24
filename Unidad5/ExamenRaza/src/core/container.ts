@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { ActualizarAnimal } from '../application/useCases/ActualizarAnimal';
-import { ListadoAnimalesFecha } from '../application/useCases/ListadoAnimalesFecha';
-import { ListadoCompletoRazas } from '../application/useCases/ListadoCompletoRazas';
+import { ActualizarAnimal } from '../application/useCasesClases/ActualizarAnimal';
+import { ListadoAnimalesFecha } from '../application/useCasesClases/ListadoAnimalesFecha';
+import { ListadoCompletoRazas } from '../application/useCasesClases/ListadoCompletoRazas';
 import { AnimalRepository } from '../data/repositories/AnimalRepository';
 import { RazaRepository } from '../data/repositories/RazaRepository';
 import { AnimalesViewModel } from '../presentation/viewModels/AnimalesViewModel';

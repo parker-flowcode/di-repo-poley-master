@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { IAnimalRepository } from '../../domain/interfaces/repositories/IAnimalRepository';
-import { IActualizarAnimal } from '../../domain/interfaces/useCases/IActualizarAnimal';
+import { IActualizarAnimal } from '../iUseCases/IActualizarAnimal';
 import { TYPES } from '../../core/types';
 
 @injectable()

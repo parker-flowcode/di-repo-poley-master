@@ -18,13 +18,6 @@ domain
                 +actualizarAnimal(idAnimal: int, idRaza: int): bool
             -iRepositoryRaza
                 +getListadosRazas(): Raza[]
-        useCases
-            -iUseCaseListadoAnimalFecha
-                +execute(fecha:Date): Animal[]  
-	   		-iUseCaseActualizarAnimal
-                +execute(idAnimal: int, idRaza: int): bool
-            -iUseCaseListadoCompletoRazas    
-                +execute(): Raza[]
     application
         useCasesClases
             -UseCaseListadoAnimalFecha implements iUseCaseListadoAnimalFecha
@@ -37,6 +30,13 @@ domain
             -iUseCaseListadoCompletoRazas implements iUseCaseListadoCompletoRazas
                 Se le inyecta la interfaz iRepositoryRaza
                 +execute(): idRaza[]
+        iUseCases
+            -iUseCaseListadoAnimalFecha
+                +execute(fecha:Date): Animal[]  
+	   		-iUseCaseActualizarAnimal
+                +execute(idAnimal: int, idRaza: int): bool
+            -iUseCaseListadoCompletoRazas    
+                +execute(): Raza[]
     presentation
         viewModels
             AnimalesViewModels
@@ -60,6 +60,10 @@ domain
                 +sexo: String(get)
                 -asignarColor()
                     -Le asignará un color a la propiedad colorFondo y se le llamará en el
+            Mappers 
+                AnimalConColorMapper.ts
+                //Transformara de Animal a AnimalConColor (y viceversa; en este caso no es necesario)
+
     data
         repositories
             -RepositoryAnimal implements iRepositoryAnimales

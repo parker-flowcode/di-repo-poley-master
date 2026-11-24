@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { Raza } from '../../domain/entities/Raza';
 import { IRazaRepository } from '../../domain/interfaces/repositories/IRazaRepository';
-import { IListadoCompletoRazas } from '../../domain/interfaces/useCases/IListadoCompletoRazas';
+import { IListadoCompletoRazas } from '../iUseCases/IListadoCompletoRazas';
 import { TYPES } from '../../core/types';
 
 @injectable()

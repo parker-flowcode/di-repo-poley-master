@@ -1,4 +1,4 @@
-import { Raza } from '../../entities/Raza';
+import { Raza } from '../../domain/entities/Raza';
 
 export interface IListadoCompletoRazas {
   execute(): Raza[];
